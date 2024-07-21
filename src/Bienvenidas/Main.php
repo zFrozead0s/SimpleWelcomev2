@@ -8,6 +8,7 @@ use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\entity\effect\Effect;
 use pocketmine\scheduler\Task;
+use pocketmine\entity\effect\VanillaEffects;
 
 class Main extends PluginBase {
     public function onEnable(): void {

@@ -5,6 +5,7 @@ namespace Bienvenidas\Tasks;
 use pocketmine\scheduler\Task;
 use pocketmine\player\Player;
 use pocketmine\entity\effect\Effect;
+use pocketmine\entity\effect\VanillaEffects;
 
 class RemoveBlindnessTask extends Task {
     private $player;
