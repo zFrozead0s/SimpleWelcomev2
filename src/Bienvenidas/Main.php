@@ -38,7 +38,7 @@ class Main extends PluginBase {
 $effect = new EffectInstance(VanillaEffects::BLINDNESS(), 40);
 $player->getEffects()->add($effect);
         $player->getEffects()->add($effect);
-        $this->getScheduler()->scheduleDelayeTask(new ClosureTask(function () {use ($player, $effect)}); {
+        $this->getScheduler()->scheduleDelayeTask(new ClosureTask(function () { ($player, $effect)}); {
             if ($player->getEffects()->has($effect)) {
                 $player->getEffects()->remove($effect);
             }
