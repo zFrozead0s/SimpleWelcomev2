@@ -11,7 +11,7 @@ use pocketmine\scheduler\Task;
 use pocketmine\entity\effect\VanillaEffects;
 use pocketmine\entity\effect\EffectInstance
 
-class Main extends PluginBase; {
+class Main extends PluginBase {
     public function onEnable(): void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
