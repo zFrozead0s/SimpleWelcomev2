@@ -19,14 +19,21 @@ class Main extends PluginBase {
 
         // Get the welcome message from the config.yml file
         $message = $this->getConfig()->get("message");
+        if ($message === null) {
+            $message = "Welcome, {username}!"; // default message
+        }
 
         // Send the welcome message to the player
         $player->sendMessage(TextFormat::GREEN . str_replace("{username}", $username, $message));
 
         // Create a blindness effect for 2 seconds
-        $effect = $player->getEffects()->add(new \pocketmine\entity\effect\BlindnessEffect(20 * 2));
-        $this->getServer()->getScheduler()->scheduleDelayedTask(new \pocketmine\scheduler\CallbackTask(function() use ($player, $effect) {
-            $player->getEffects()->remove($effect);
-        }), 20 * 2);
+        if ($player instanceof Player) {
+            $effect = $player->getEffects()->add(new \pocketmine\entity\effect\BlindnessEffect(40));
+            $this->getServer()->getScheduler()->scheduleDelayedTask(new \pocketmine\scheduler\CallbackTask(function() use ($player, $effect) {
+                if ($player instanceof Player) {
+                    $player->getEffects()->remove($effect);
+                }
+            }), 40);
+        }
     }
 }
