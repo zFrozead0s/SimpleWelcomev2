@@ -28,26 +28,16 @@ class Main extends PluginBase {
             $message = "Welcome, {username}!"; // default message
         }
 
-        $player->sendMessage(TextFormat::GREEN . str_replace("{username}", $username, $message));
+        $player->sendMessage(TextFormat::GREEN. str_replace("{username}", $username, $message));
     }
 
     private function applyBlindnessEffect(Player $player) {
         $effect = new Effect(Effect::BLINDNESS, 40); // assuming BLINDNESS is a valid constant
         $player->getEffects()->add($effect);
-        $this->getScheduler()->scheduleDelayedTask(new class($player, $effect) extends Task {
-            private $player;
-            private $effect;
-
-            public function __construct(Player $player, Effect $effect) {
-                $this->player = $player;
-                $this->effect = $effect;
+        $this->getScheduler()->scheduleDelayedTask(new Task(function() use ($player, $effect) {
+            if ($player->getEffects()->has($effect)) {
+                $player->getEffects()->remove($effect);
             }
-
-            public function onRun(int $currentTick): void {
-                if ($this->player->getEffects()->has($this->effect)) {
-                    $this->player->getEffects()->remove($this->effect);
-                }
-            }
-        }, 40);
+        }), 40);
     }
 }
