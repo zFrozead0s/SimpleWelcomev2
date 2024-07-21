@@ -9,6 +9,7 @@ use pocketmine\utils\TextFormat;
 use pocketmine\entity\effect\Effect;
 use pocketmine\scheduler\Task;
 use pocketmine\entity\effect\VanillaEffects;
+use pocketmine\entity\effect\EffectInstance
 
 class Main extends PluginBase {
     public function onEnable(): void {
