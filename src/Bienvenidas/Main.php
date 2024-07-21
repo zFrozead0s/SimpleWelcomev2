@@ -8,7 +8,6 @@ use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\entity\effect\Effect;
 use pocketmine\scheduler\Task;
-use Bienvenidas\Tasks\RemoveBlindnessTask;
 
 class Main extends PluginBase {
     public function onEnable(): void {
@@ -33,8 +32,22 @@ class Main extends PluginBase {
     }
 
     private function applyBlindnessEffect(Player $player) {
-        $effect = new Effect(15, 40); // assuming 15 is the correct effect ID for blindness
+        $effect = new Effect(Effect::BLINDNESS, 40); // assuming BLINDNESS is a valid constant
         $player->getEffects()->add($effect);
-        $this->getServer()->getScheduler()->scheduleDelayedTask(new RemoveBlindnessTask($player, $effect), 40);
+        $this->getScheduler()->scheduleDelayedTask(new class($player, $effect) extends Task {
+            private $player;
+            private $effect;
+
+            public function __construct(Player $player, Effect $effect) {
+                $this->player = $player;
+                $this->effect = $effect;
+            }
+
+            public function onRun(int $currentTick): void {
+                if ($this->player->getEffects()->has($this->effect)) {
+                    $this->player->getEffects()->remove($this->effect);
+                }
+            }
+        }, 40);
     }
 }
