@@ -24,7 +24,9 @@ class Main extends PluginBase {
         }
 
         // Send the welcome message to the player
-        $player->sendMessage(TextFormat::GREEN . str_replace("{username}", $username, $message));
+        if ($player instanceof Player) {
+            $player->sendMessage(TextFormat::GREEN. str_replace("{username}", $username, $message));
+        }
 
         // Create a blindness effect for 2 seconds
         if ($player instanceof Player) {
