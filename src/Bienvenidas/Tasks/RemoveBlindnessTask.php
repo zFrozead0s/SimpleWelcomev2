@@ -15,7 +15,7 @@ class RemoveBlindnessTask extends Task {
         $this->effect = $effect;
     }
 
-    public function onRun(int $currentTick) {
+    public function onRun(int $currentTick): void {
         if ($this->player->getEffects()->has($this->effect)) {
             $this->player->getEffects()->remove($this->effect);
         }
