@@ -33,7 +33,9 @@ class Main extends PluginBase {
     }
 
     private function applyBlindnessEffect(Player $player) {
-        $effect = new Effect(Effect::BLINDNESS, 40); // assuming BLINDNESS is a valid constant
+
+$effect = new EffectInstance(VanillaEffects::BLINDNESS(), 40);
+$player->getEffects()->add($effect);
         $player->getEffects()->add($effect);
         $this->getScheduler()->scheduleDelayedTask(new Task(function() use ($player, $effect) {
             if ($player->getEffects()->has($effect)) {
