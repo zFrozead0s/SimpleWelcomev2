@@ -7,7 +7,6 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\entity\effect\Effect;
-use pocketmine\scheduler\Task;
 
 class Main extends PluginBase {
     public function onEnable(): void {
@@ -28,16 +27,12 @@ class Main extends PluginBase {
             $message = "Welcome, {username}!"; // default message
         }
 
-        $player->sendMessage(TextFormat::GREEN . str_replace("{username}", $username, $message));
+        $player->sendMessage(TextFormat::GREEN. str_replace("{username}", $username, $message));
     }
 
     private function applyBlindnessEffect(Player $player) {
-        $effect = new Effect(Effect::BLINDNESS, 40); // assuming BLINDNESS is a valid constant
+        $effect = new Effect(15, 40); // assuming 15 is the correct effect ID for blindness
         $player->getEffects()->add($effect);
-        $this->getServer()->getScheduler()->scheduleDelayedTask(new Task(function() use ($player, $effect) {
-            if ($player->getEffects()->has($effect)) {
-                $player->getEffects()->remove($effect);
-            }
-        }), 40);
+        $this->getScheduler()->scheduleDelayedTask(new RemoveBlindnessTask($player, $effect), 40);
     }
 }
