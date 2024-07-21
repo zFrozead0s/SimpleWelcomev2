@@ -6,9 +6,11 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
+use pocketmine\entity\effect\Effect;
+use pocketmine\scheduler\CallbackTask;
 
 class Main extends PluginBase {
-    public function onEnable() {
+    public function onEnable(): void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
@@ -30,11 +32,11 @@ class Main extends PluginBase {
     }
 
     private function applyBlindnessEffect(Player $player) {
-        $effect = $player->getEffects()->add(new \pocketmine\entity\effect\BlindnessEffect(40));
-        $this->getServer()->getScheduler()->scheduleDelayedTask(new \pocketmine\scheduler\CallbackTask(function() use ($player, $effect) {
+        $effect = $player->getEffects()->add(new Effect(Effect::BLINDNESS, 40));
+        $this->getServer()->getScheduler()->scheduleDelayedTask(new CallbackTask(function() use ($player, $effect) {
             if ($player->getEffects()->has($effect)) {
                 $player->getEffects()->remove($effect);
             }
         }), 40);
     }
-} 
+}
