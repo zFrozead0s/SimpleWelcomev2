@@ -1,0 +1,6 @@
+name: Bienvenidas
+version: 1.0
+api: 5.0.0
+main: Bienvenidas\Main
+description: Envía un mensaje de bienvenida a los jugadores cuando se unen al servidor.
+author: Froz
